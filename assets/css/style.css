@@ -1,17 +1,40 @@
+:root{
+    --white: #F2F2F3;
+}
+
 html{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+body, .btn{
+    color: var(--white);
+}
+.btn:hover{
+    color: #BBD8EC;
+}
+.container-fluid{
+    background-color: #101014;
+}
 .row{
     margin-right: 0;
     margin-left: 0;
 }
+.weather-search{
+    border: 1px solid var(--white);
+    border-radius: 10px 0 0 10px !important;
+}
+.search-button{
+    border: 1px solid var(--white);
+    border-radius: 0 10px 10px 0 !important;
+}
 .card{
     width: 300px;
+    background: none;
 }
 .card-img-top{
-    background-color: #343a40;
+    background-color: #1B1A1D;
     height: 100px;
     object-fit: contain;
+    border-radius: 20px;
 }
