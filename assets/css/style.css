@@ -1,0 +1,17 @@
+html{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.row{
+    margin-right: 0;
+    margin-left: 0;
+}
+.card{
+    width: 300px;
+}
+.card-img-top{
+    background-color: #343a40;
+    height: 100px;
+    object-fit: contain;
+}
