@@ -1,36 +1,75 @@
 :root{
-    --white: #F2F2F3;
+    --text: #F2F2F3;
+    --background: #101014;
 }
-
 html{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 body, .btn{
-    color: var(--white);
+    color: var(--text);
+    background-color: var(--background) !important;
+}
+.input-group{
+    flex-wrap: nowrap;
 }
 .btn:hover{
     color: #BBD8EC;
 }
 .container-fluid{
-    background-color: #101014;
+    background-color: var(--background) !important;
+}
+#notification{
+    text-align: center;
+    height: 1em;
+}
+.weather-header{
+    display: flex;
+    align-items: center;
+}
+#city{
+    display: flex;
+    margin: 0 20px;
+    align-items: center;
+    gap: 10px;
 }
 .row{
     margin-right: 0;
     margin-left: 0;
 }
+#search-form{
+    margin-left: 120px;
+}
+.search{
+    margin: 0;
+}
 .weather-search{
-    border: 1px solid var(--white);
+    border: 1px solid var(--text);
     border-radius: 10px 0 0 10px !important;
+    padding-left: 10px;
 }
 .search-button{
     border: 1px solid var(--white);
     border-radius: 0 10px 10px 0 !important;
 }
 .card{
-    width: 300px;
-    background: none;
+    width: 250px;
+    height: 250px;
+    background: #1B1A1D;
+    padding: 10px;
+    border-radius: 20px;
+}
+.weather_header{
+    display: flex;
+    align-content: space-between;
+    justify-content: space-between;
+}
+.card_body{
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+    justify-content: space-between;
 }
 .card-img-top{
     background-color: #1B1A1D;
