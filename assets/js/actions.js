@@ -1,12 +1,21 @@
-// let weatherIcon = $(".card-img-top");
-// let cityName = $(".card-title").val();
-
 //get current date
 let currentDate = moment();
 let apiKey = "418a089da6eee963f8933fd7698f0cd9";
 let searchButton = $(".search-button");
 let lat;
 let lon;
+const citiesHistory = [];
+let history = $("#history");
+let span = $("<span>");
+
+// display history of cities
+if(citiesHistory){
+    citiesHistory.forEach(city => {
+        console.log("HAHAHAHHA: ", city);
+        span.append(city)
+        history.append(span);
+    })
+}
 
 searchButton.on("click", function(event){
     event.preventDefault();
@@ -14,10 +23,34 @@ searchButton.on("click", function(event){
         $("#forecast").html("");
         $("#notification").text("");
         cityName = $("#search-input").val();
+        citiesHistory.push(cityName);
+        if (citiesHistory.length > 5) {
+            citiesHistory.shift();
+        }
+        localStorage.setItem("citiesHistory", citiesHistory);
+
+        citiesHistory.forEach(city => {
+            console.log("HAHAHAHHA: ", city);
+            span.append(city)
+            history.append(span);
+        })
+        
+        // citiesHistory.forEach(function(city) {
+        //     const span = document.createElement("span");
+        //     span.innerText = city;
+        //     span.addEventListener("click", function(event) {
+        //         event.preventDefault();
+        //         cityName = city;
+        //     });
+        //     history.append(span);
+        // })
+
         currentCityWeather(cityName);
         console.log($("#search-input").val());
         localStorage.setItem("cityName", cityName[0].toUpperCase() + cityName.slice(1));
+        $("#city-icon").html('<i class="fa-solid fa-location-dot"></i>');
         $("#city-name").html(cityName[0].toUpperCase() + cityName.slice(1));
+        $("#form-heading").text("Today");
     } else {
         $("#notification").text("Type in a city name");
     }
@@ -35,7 +68,9 @@ function mph2kmph(mph){
 
 if(localStorage.getItem("cityName")){
     cityName = localStorage.getItem("cityName");
+    $("#city-icon").html('<i class="fa-solid fa-location-dot"></i>');
     $("#city-name").html(cityName);
+    $("#form-heading").text("Today");
     currentCityWeather(cityName);
 }
 

@@ -26,8 +26,11 @@ body, .btn{
     height: 1em;
 }
 .weather-header{
+    margin: 0;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    max-width: 600px;
 }
 #city{
     display: flex;
@@ -93,6 +96,9 @@ h1{
     height: 100px;
     object-fit: contain;
     border-radius: 20px;
+}
+#forecast{
+    gap: 1em;
 }
 .forecast{
     width: 100px;
