@@ -8,6 +8,7 @@ html{
     box-sizing: border-box;
 }
 body, .btn{
+    font-family: sans-serif;
     color: var(--text);
     background-color: var(--background) !important;
 }
@@ -54,26 +55,49 @@ body, .btn{
     border-radius: 0 10px 10px 0 !important;
 }
 .card{
-    width: 250px;
-    height: 250px;
+    width: 310px;
     background: #1B1A1D;
-    padding: 10px;
     border-radius: 20px;
+    border: none;
+}
+.today{
+    background-color: #BBD8EC;
+    color: #000;
+}
+.darker{
+    filter: brightness(0.9);
+}
+h1{
+    font-weight: 700;
+    font-size: 4.8em;
 }
 .weather_header{
     display: flex;
     align-content: space-between;
     justify-content: space-between;
+    border-radius: 20px 20px 0px 0px;
+    font-weight: 600;
+    font-size: 1.5em;
+    padding: 10px;
 }
 .card_body{
     display: flex;
     flex-direction: row;
     align-content: space-between;
     justify-content: space-between;
+    padding: 0 10px;
+    margin: 10px;
 }
 .card-img-top{
     background-color: #1B1A1D;
     height: 100px;
     object-fit: contain;
     border-radius: 20px;
+}
+.forecast{
+    width: 100px;
+    text-align: center;
+}
+.right{
+    text-align: right;
 }
