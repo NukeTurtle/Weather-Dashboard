@@ -66,6 +66,11 @@ body, .btn{
 .today{
     background-color: #BBD8EC;
     color: #000;
+    background-image: url(../img/sun.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 140px 90px;
+    background-blend-mode: hue;
 }
 .darker{
     filter: brightness(0.9);

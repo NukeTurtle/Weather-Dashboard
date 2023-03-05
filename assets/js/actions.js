@@ -11,7 +11,6 @@ let span = $("<span>");
 // display history of cities
 if(citiesHistory){
     citiesHistory.forEach(city => {
-        console.log("HAHAHAHHA: ", city);
         span.append(city)
         history.append(span);
     })
@@ -30,7 +29,6 @@ searchButton.on("click", function(event){
         localStorage.setItem("citiesHistory", citiesHistory);
 
         citiesHistory.forEach(city => {
-            console.log("HAHAHAHHA: ", city);
             span.append(city)
             history.append(span);
         })
@@ -46,7 +44,6 @@ searchButton.on("click", function(event){
         // })
 
         currentCityWeather(cityName);
-        console.log($("#search-input").val());
         localStorage.setItem("cityName", cityName[0].toUpperCase() + cityName.slice(1));
         $("#city-icon").html('<i class="fa-solid fa-location-dot"></i>');
         $("#city-name").html(cityName[0].toUpperCase() + cityName.slice(1));
@@ -66,6 +63,7 @@ function mph2kmph(mph){
     return (mph * 1.609).toFixed(2);
 }
 
+// store and show last searched city as main weather report
 if(localStorage.getItem("cityName")){
     cityName = localStorage.getItem("cityName");
     $("#city-icon").html('<i class="fa-solid fa-location-dot"></i>');
@@ -81,7 +79,6 @@ function currentCityWeather(cityName){
         url: apiURL,
         method: "GET"
     }).then(function(response){
-        console.log(response);
         lat = response[0].lat;
         lon = response[0].lon;
         let todaySection = $("#today");
@@ -90,10 +87,7 @@ function currentCityWeather(cityName){
 
         todaySection.html(weatherCard);
         weatherHeader.html(`<div>${currentDate.format("dddd")}</div><div>${currentDate.format("LT")}</div>`);
-        console.log(currentDate.add(1, "days").format("dddd"));
-        console.log(currentDate.format("LT"));
         weatherCard.append(weatherHeader);
-    
 
     // function to display todays weather data for selected city
     let apiURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
@@ -101,15 +95,14 @@ function currentCityWeather(cityName){
         url: apiURL,
         method: "GET"
     }).then(function(response){
-            console.log(response);
             // card for todays weather
             let weatherBody = $("<div>").attr({class: "card_body"});
             let weatherBodyLeft = $("<div>").attr({class: "card_left"});
             let weatherBodyRight = $("<div>").attr({class: "card_right right"});
             let weatherSunrise = $("<div>").attr({class: "card_sunrise"});
-            weatherSunrise.html("Sunrise: <b>"+moment(response.sys.sunrise).format("LT")+"</b>");
+            weatherSunrise.html("Sunrise: <b>"+moment.unix(response.sys.sunrise).format('h:mm A')+"</b>");
             let weatherSunset = $("<div>").attr({class: "card_sunset"});
-            weatherSunset.html("Sunset: <b>"+moment(response.sys.sunset).format("LT")+"</b>");
+            weatherSunset.html("Sunset: <b>"+moment.unix(response.sys.sunset).format('h:mm A')+"</b>");
             let weatherTemp = $("<h1>");
             weatherTemp.text(k2c(response.main.temp)+"°");
             let weatherIcon = $("<img>");
@@ -135,7 +128,6 @@ function currentCityWeather(cityName){
                 url: prognosisURL,
                 method: "GET"
             }).then(function(response){
-                console.log("16days: ",response);
                 const ArrayOfHours = response.list;
                 const fiveDaysForecast = [];
                 for(let i = 0; i < ArrayOfHours.length; i++) {
@@ -145,7 +137,6 @@ function currentCityWeather(cityName){
                 }
                 let forecastCard
                 fiveDaysForecast.forEach(day => {
-                    console.log(day)
                     forecastCard = $("<div>").attr({class: "card forecast"});
                     let forecastHeader = $("<div>").attr({class: "forecast_header forecast"});
                     let forecastBody = $("<div>").attr({class: "forecast_body"});
@@ -170,6 +161,5 @@ function currentCityWeather(cityName){
     })
 }
 
-// store and show last searched city as main weather report
+// TODO:
 // create a history list of previously searched cities
-// function to display an array of 5 days worth weather data sets for currently selected city
