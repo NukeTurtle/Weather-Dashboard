@@ -8,13 +8,38 @@ const citiesHistory = [];
 let history = $("#history");
 let span = $("<span>");
 
+$(document).ready(function() {
+    getCityFromStorage();
+})
+
 // display history of cities
-if(citiesHistory){
-    citiesHistory.forEach(city => {
-        span.append(city)
-        history.append(span);
-    })
+function getCityFromStorage(){
+    let historyCityArray = JSON.parse(localStorage.getItem("citiesHistory"));
+    if(historyCityArray){
+        const historyCities = historyCityArray;
+    
+        for (var a = 0; a < historyCities.length; a++) {
+        // historyCities.forEach(city => {
+        console.log("city: ",historyCities[a])
+            const button = $("<div>");
+            button.text(historyCities[a]);
+            button.attr({"id": historyCities[a], "class": "history_item"});
+            
+            $('#history').append(button);
+            if(!historyCities.includes(button)){
+                button.on("click", function(event) {
+                    event.preventDefault();
+                    console.log($(this).attr("id"))
+                    let currentCity = $(this).attr("id");
+                    $("#city-name").html(currentCity);
+                    currentCityWeather(currentCity);
+                });
+            }
+        }
+    }
 }
+$('#history').empty();
+getCityFromStorage();
 
 searchButton.on("click", function(event){
     event.preventDefault();
@@ -22,35 +47,30 @@ searchButton.on("click", function(event){
         $("#forecast").html("");
         $("#notification").text("");
         cityName = $("#search-input").val();
-        citiesHistory.push(cityName);
-        if (citiesHistory.length > 5) {
-            citiesHistory.shift();
+
+        // save city to history
+        function setCityToStorage(){
+            if(!citiesHistory.includes(cityName[0].toUpperCase() + cityName.slice(1))){
+                citiesHistory.push(cityName[0].toUpperCase() + cityName.slice(1));
+                if (citiesHistory.length > 5) {
+                    citiesHistory.shift();
+                }
+                localStorage.setItem("citiesHistory", JSON.stringify(citiesHistory));
+            }
         }
-        localStorage.setItem("citiesHistory", citiesHistory);
+        setCityToStorage();
+        $('#history').empty();
+        getCityFromStorage();
 
-        citiesHistory.forEach(city => {
-            span.append(city)
-            history.append(span);
-        })
-        
-        // citiesHistory.forEach(function(city) {
-        //     const span = document.createElement("span");
-        //     span.innerText = city;
-        //     span.addEventListener("click", function(event) {
-        //         event.preventDefault();
-        //         cityName = city;
-        //     });
-        //     history.append(span);
-        // })
-
+        // $("#city-name").html(cityName);
         currentCityWeather(cityName);
-        localStorage.setItem("cityName", cityName[0].toUpperCase() + cityName.slice(1));
         $("#city-icon").html('<i class="fa-solid fa-location-dot"></i>');
-        $("#city-name").html(cityName[0].toUpperCase() + cityName.slice(1));
+        $("#city-name").html(JSON.parse(localStorage.getItem("citiesHistory"))[0]);
         $("#form-heading").text("Today");
     } else {
         $("#notification").text("Type in a city name");
     }
+    $("#search-input").val("");
 })
 
 //convert kelvin to celsius
@@ -64,10 +84,10 @@ function mph2kmph(mph){
 }
 
 // store and show last searched city as main weather report
-if(localStorage.getItem("cityName")){
-    cityName = localStorage.getItem("cityName");
+if(localStorage.getItem("citiesHistory") !== null){
+    cityName = localStorage.getItem(citiesHistory.length-1);
     $("#city-icon").html('<i class="fa-solid fa-location-dot"></i>');
-    $("#city-name").html(cityName);
+    $("#city-name").html(JSON.parse(localStorage.getItem("citiesHistory"))[0]);
     $("#form-heading").text("Today");
     currentCityWeather(cityName);
 }
@@ -135,7 +155,8 @@ function currentCityWeather(cityName){
                         fiveDaysForecast.push(ArrayOfHours[i])
                     }
                 }
-                let forecastCard
+                let forecastCard;
+                $("#forecast").empty();
                 fiveDaysForecast.forEach(day => {
                     forecastCard = $("<div>").attr({class: "card forecast"});
                     let forecastHeader = $("<div>").attr({class: "forecast_header forecast"});
@@ -150,16 +171,15 @@ function currentCityWeather(cityName){
                     forecastHumidity.html("Humidity<br>"+day.main.humidity);
 
                     // append all children to the card
+                    
                     forecastHeader.append(forecastDay);
                     forecastBody.append(forecastIcon, forecastTemp, forecastHumidity);
                     forecastCard.append(forecastHeader, forecastBody);
                     $("#forecast").append(forecastCard);
                 });
-                
             })
         })
     })
 }
-
 // TODO:
 // create a history list of previously searched cities
