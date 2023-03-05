@@ -7,10 +7,19 @@ html{
     padding: 0;
     box-sizing: border-box;
 }
+body{
+    max-width: 600px;
+    margin: 0 auto;
+}
 body, .btn{
     font-family: sans-serif;
     color: var(--text);
     background-color: var(--background) !important;
+}
+#top{
+    display: flex;
+    gap: 2em;
+    margin: 0 auto;
 }
 .input-group{
     flex-wrap: nowrap;
@@ -30,20 +39,12 @@ body, .btn{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    max-width: 600px;
 }
 #city{
     display: flex;
     margin: 0 20px;
     align-items: center;
     gap: 10px;
-}
-.row{
-    margin-right: 0;
-    margin-left: 0;
-}
-#search-form{
-    margin-left: 120px;
 }
 .search{
     margin: 0;
@@ -66,11 +67,10 @@ body, .btn{
 .today{
     background-color: #BBD8EC;
     color: #000;
-    background-image: url(../img/sun.png);
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: 140px 90px;
-    background-blend-mode: hue;
+}
+#history{
+    display: flex;
+    flex-direction: column;
 }
 .darker{
     filter: brightness(0.9);
@@ -102,13 +102,40 @@ h1{
     object-fit: contain;
     border-radius: 20px;
 }
+.row{
+    margin: 0 auto;
+}
 #forecast{
+    display: flex;
     gap: 1em;
 }
 .forecast{
     width: 100px;
     text-align: center;
 }
+.forecast_icon{
+    width: 100%;
+}
 .right{
     text-align: right;
 }
+@media only screen and (max-width: 800px) {
+    .weather-header {
+        flex-direction: column;
+    }
+    #top{
+        gap: 0;
+        flex-direction: column;
+    }
+    #history{
+        flex-direction: row;
+        gap: 0.5em;
+        justify-content: center;
+    }
+    #forecast{
+        gap: 0.1em;
+    }
+    .forecast{
+        width: 70px;
+    }
+  }
